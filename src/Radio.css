@@ -1,0 +1,18 @@
+.Radio {
+  display: flex;
+  align-items: center;
+}
+
+.Radio::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border: 1px solid blue;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.Radio[aria-checked='true']::before {
+  background-color: blue;
+}
