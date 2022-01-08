@@ -2,7 +2,7 @@ import React from 'react';
 import useRovingTabIndex from './useRovingTabIndex';
 
 function RadioGroup(props) {
-  const [tabIndex, handleKeyDown] = useRovingTabIndex(0);
+  const [tabIndex, handleKeyDown, handleClick] = useRovingTabIndex(0);
 
   const { children: childrenProp } = props;
   const children = React.Children.map(childrenProp, (child, i) => {
@@ -10,7 +10,12 @@ function RadioGroup(props) {
   });
 
   return (
-    <div className="RadioGroup" role="radiogroup" onKeyDown={handleKeyDown}>
+    <div
+      className="RadioGroup"
+      role="radiogroup"
+      onKeyDown={handleKeyDown}
+      onClick={handleClick}
+    >
       {children}
     </div>
   );

@@ -3,6 +3,10 @@ import { useState } from 'react';
 export default function useRovingTabIndex(initialIndex = 0) {
   const [tabIndex, setTabIndex] = useState(initialIndex);
 
+  function clamp(index, children) {
+    return Math.min(Math.max(index, 0), children.length - 1);
+  }
+
   function getFocusableChildren(target) {
     return Array.from(target.querySelectorAll('[tabindex]'));
   }
@@ -15,20 +19,29 @@ export default function useRovingTabIndex(initialIndex = 0) {
     switch (e.key) {
       case 'ArrowRight':
       case 'ArrowDown':
-        newActiveIndex = Math.min(activeIndex + 1, children.length - 1);
+        newActiveIndex++;
         break;
       case 'ArrowLeft':
       case 'ArrowUp':
-        newActiveIndex = Math.max(activeIndex - 1, 0);
+        newActiveIndex--;
         break;
       default:
         break;
     }
 
-    if (newActiveIndex !== activeIndex) {
-      setTabIndex(newActiveIndex);
-    }
+    setTabIndex(clamp(newActiveIndex, children));
   }
 
-  return [tabIndex, handleKeyDown];
+  function handleClick(e) {
+    const target = e.target.closest('[tabindex]');
+    if (!target) {
+      return;
+    }
+
+    const children = getFocusableChildren(e.currentTarget);
+    let newActiveIndex = children.findIndex((el) => el === target);
+    setTabIndex(clamp(newActiveIndex, children));
+  }
+
+  return [tabIndex, handleKeyDown, handleClick];
 }

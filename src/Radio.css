@@ -1,6 +1,7 @@
 .Radio {
   display: flex;
   align-items: center;
+  cursor: default;
 }
 
 .Radio::before {

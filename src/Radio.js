@@ -1,10 +1,10 @@
 import './Radio.css';
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
 function Radio({ label, focusable }) {
   const ref = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (focusable) {
       ref.current.focus();
     }
